@@ -1,0 +1,24 @@
+{
+  "name": "generator-geb-spock",
+  "version": "1.0.0",
+  "description": "A simple geb/spock skeleton generator for yeoman",
+  "repository": "HenryVogt/generator-geb-spock",
+  "keywords": [
+    "yeoman-generator",
+    "Geb",
+    "Spock"
+  ],
+  "author": {
+    "name": "Henry Vogt",
+    "email": "henry.vogt@outlook.com"
+  },
+  "license": "MIT",
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "dependencies": {
+    "yeoman-generator": "^0.24.1",
+    "yosay": "^1.2.1"
+  }
+}

@@ -1,0 +1,7 @@
+ext {
+	gradle_version		=	'3.2.1'
+}
+
+task wrapper(type: Wrapper) {
+   gradleVersion = "gradle_version"
+}
