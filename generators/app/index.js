@@ -36,6 +36,11 @@ module.exports = yeoman.Base.extend({
 		}.bind(this));
 	},
 
+	writing: function() {
+		this._copy_file('gitignore', '.gitignore');
+		this._copy_file('build.gradle');
+	},
+
 	install: function () {
     	this.spawnCommand('gradle', ['wrapper']);
   	}
