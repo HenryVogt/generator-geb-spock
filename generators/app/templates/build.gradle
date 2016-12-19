@@ -1,39 +1,79 @@
 plugins {
-	id 'groovy'
-	id 'application'
+    id 'groovy'
+    id 'codenarc'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
 }
 
 ext {
-	gradle_version           = '3.2.1'
-	groovy_version           = '2.4.7'
-	gebspock_version         = '1.0'
-	spockcore_version        = '1.1-groovy-2.4-rc-3'
-	selenium_version         = '3.0.1'
-	webdrivermanager_version = '1.5.0'
-	spockreports_version     = '1.2.13'
-	slf4j_version            = '1.7.21'
+    gradle_version              = '3.2.1'
+    groovy_version              = '2.4.7'
+    gebspock_version            = '1.0'
+    spockcore_version           = '1.1-groovy-2.4-rc-3'
+    selenium_version            = '3.0.1'
+    webdrivermanager_version    = '1.5.0'
+    spockreports_version        = '1.2.13'
+    slf4j_version               = '1.7.21'
+    codenarc_version            = '0.26.0'
 }
 
 dependencies {
-	testCompile "org.codehaus.groovy:groovy-all:$groovy_version"
-	testCompile "org.gebish:geb-spock:$gebspock_version"
-	testCompile("org.spockframework:spock-core:$spockcore_version") {
-		exclude group: "org.codehaus.groovy"
-	}
-	testCompile "org.seleniumhq.selenium:selenium-support:$selenium_version"
-	testCompile "org.seleniumhq.selenium:selenium-chrome-driver:$selenium_version"
-	testCompile "org.seleniumhq.selenium:selenium-firefox-driver:$selenium_version"
-	testCompile "org.seleniumhq.selenium:selenium-ie-driver:$selenium_version"
-	testCompile("io.github.bonigarcia:webdrivermanager:$webdrivermanager_version") {
-		exclude group: "org.seleniumhq.selenium"
-	}
-	testCompile("com.athaydes:spock-reports:$spockreports_version") {
-		transitive = false
-	}
-	testCompile "org.slf4j:slf4j-api:$slf4j_version"
-	testCompile "org.slf4j:slf4j-simple:$slf4j_version"
+    // Groovy language
+    testCompile "org.codehaus.groovy:groovy-all:$groovy_version"
+
+    // Geb/Spock framework
+    testCompile "org.gebish:geb-spock:$gebspock_version"
+    testCompile("org.spockframework:spock-core:$spockcore_version") {
+        exclude group: "org.codehaus.groovy"
+    }
+
+    // Spock report
+    testCompile("com.athaydes:spock-reports:$spockreports_version") {
+        transitive = false
+    }
+
+    // Selenium driver
+    testCompile "org.seleniumhq.selenium:selenium-support:$selenium_version"
+    testCompile "org.seleniumhq.selenium:selenium-chrome-driver:$selenium_version"
+    testCompile "org.seleniumhq.selenium:selenium-firefox-driver:$selenium_version"
+    testCompile "org.seleniumhq.selenium:selenium-ie-driver:$selenium_version"
+
+    // WebDriverManager
+    testCompile("io.github.bonigarcia:webdrivermanager:$webdrivermanager_version") {
+        exclude group: "org.seleniumhq.selenium"
+    }
+
+    // Logging
+    testCompile "org.slf4j:slf4j-api:$slf4j_version"
+    testCompile "org.slf4j:slf4j-simple:$slf4j_version"
+}
+
+codenarc {
+    toolVersion = "$codenarc_version"
+    configFile = file('src/test/resources/CodeNarcRules.groovy')
+    reportsDir = new File("$buildDir/analysis/codenarc")
+}
+
+test {
+    doFirst {
+        systemProperty('geb.env', System.getProperty('geb.env'))
+        println("System properties: ${getSystemProperties()}")
+        test.reports.html.destination = file("$buildDir/reports/gradle-report")
+    }
+
+    // show standard out and standard error of the test JVM(s) on the console
+    testLogging.showStandardStreams = true
+
+    // set heap size for the test JVM(s)
+    minHeapSize = "128m"
+    maxHeapSize = "1024m"
+
+    outputs.upToDateWhen { false }
 }
 
 task wrapper(type: Wrapper) {
-   gradleVersion = "$gradle_version"
+    gradleVersion = "$gradle_version"
 }
