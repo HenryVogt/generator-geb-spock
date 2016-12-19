@@ -15,8 +15,8 @@ class ExamplePageTest extends GebReportingSpec {
         when: 'i\'m on the example page'
         Page examplePage = to ExamplePage
 
-        then: 'the headline is "Example Domain"'
-        examplePage.headline.text() == "Example Domain"
+        then: 'the headline is \'Example Domain\''
+        examplePage.headline.text() == 'Example Domain'
     }
 
 }
