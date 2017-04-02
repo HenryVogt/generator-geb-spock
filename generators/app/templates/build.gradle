@@ -71,6 +71,12 @@ test {
     minHeapSize = "128m"
     maxHeapSize = "1024m"
 
+    // number of forked test processes to execute in parallel
+    maxParallelForks = 2
+
+    // number of test classes to execute in a forked test process
+    forkEvery = 1
+
     outputs.upToDateWhen { false }
 }
 

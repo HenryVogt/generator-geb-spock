@@ -11,14 +11,8 @@ module.exports = yeoman.Base.extend({
 		var prompt = [
 			{
 				type: 'input',
-				name: 'project',
-				message: 'What\'s the projects name?',
-				default: this.appname
-			},
-			{
-				type: 'input',
 				name: 'package',
-				message: 'What\'s the projects package?',
+				message: 'What\'s the package name?',
 				default: 'com.example'
 			},
             {
@@ -31,7 +25,6 @@ module.exports = yeoman.Base.extend({
 
 		return this.prompt(prompt).then(function(answers) {
 		    this.answers = answers;
-            this.answers.project = answers.project;
             this.answers.package = answers.package;
             this.answers.baseUrl = answers.baseUrl;
 		}.bind(this));
