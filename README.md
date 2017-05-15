@@ -14,4 +14,6 @@ The project structure is generated through the [Yeoman](http://yeoman.io/) Tool.
 - create a project folder at the prefered location and `cd` into it
 - start the generator with `yo geb-spock`
 - just hit enter on the shown prompts to create the project with an example test
-- when the generator is finished you can start the test with `gradle test -D geb.env=local.chrome`
+- when the generator is finished you can start the example test
+  - UNIX: `./gradlew test -D geb.env=local.chrome`
+  - Windows: `gradlew test -D geb.env=local.chrome`

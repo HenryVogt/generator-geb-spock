@@ -48,6 +48,10 @@ module.exports = yeoman.Base.extend({
 		copy_file('src/test/resources/spock-reports-template/spec-template.html');
         copy_file('src/test/resources/spock-reports-template/summary-template.html');
         copy_file('src/test/resources/CodeNarcRules.groovy');
+        copy_file('gradle/wrapper/gradle-wrapper.jar');
+		copy_file('gradle/wrapper/gradle-wrapper.properties');
+		copy_file('gradlew');
+		copy_file('gradlew.bat');
 
 		this.fs.copyTpl(
 		    this.templatePath('src/test/resources/GebConfig.groovy'),
@@ -75,10 +79,5 @@ module.exports = yeoman.Base.extend({
                 .replace('{packagePath}', this.answers.package.replace(/\./g, '/'))),
             this.answers
         );
-	},
-
-	install: function () {
-    	this.spawnCommand('gradle', ['wrapper']);
-  	}
-
+	}
 });
